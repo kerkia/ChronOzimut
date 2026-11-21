@@ -1,0 +1,4 @@
+node_modules/
+dist/
+*.ozchrono.jsonl
+.DS_Store

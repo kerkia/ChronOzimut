@@ -1,0 +1,129 @@
+{
+  "name": "ozimut-chrono",
+  "productName": "Ozimut Chrono",
+  "version": "0.2.0",
+  "description": "Orienteering race timing: entries, start draw, card reading, results, on the arena's laptops, with or without Internet",
+  "author": "Yann Le Helloco (Ozimut)",
+  "license": "MPL-2.0",
+  "homepage": "https://github.com/kerkia/ChronOzimut",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kerkia/ChronOzimut.git"
+  },
+  "private": true,
+  "type": "module",
+  "main": "app/main.mjs",
+  "scripts": {
+    "start": "electron .",
+    "hub": "node app/dev-hub.mjs",
+    "test": "node tools/test.mjs",
+    "check": "node tools/i18n_check.mjs",
+    "smoke": "node app/smoke.mjs",
+    "smoke:unpacked": "node app/smoke.mjs --unpacked",
+    "pack": "electron-builder --dir --publish never",
+    "dist": "electron-builder --publish never"
+  },
+  "dependencies": {
+    "electron-updater": "6.8.11",
+    "ws": "8.23.0"
+  },
+  "devDependencies": {
+    "electron": "45.3.4",
+    "electron-builder": "26.18.0"
+  },
+  "build": {
+    "appId": "com.ozimut.chrono",
+    "productName": "Ozimut Chrono",
+    "copyright": "Copyright © 2026 Yann Le Helloco. Mozilla Public License 2.0.",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "app/*.mjs",
+      "app/*.cjs",
+      "app/www/**",
+      "src/**",
+      "LICENSE",
+      "THIRD-PARTY-NOTICES.md",
+      "!app/dev-hub.mjs",
+      "!app/smoke.mjs"
+    ],
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "kerkia",
+        "repo": "ChronOzimut"
+      }
+    ],
+    "fileAssociations": [
+      {
+        "ext": "ozchrono",
+        "name": "Ozimut Chrono event",
+        "description": "Ozimut Chrono event",
+        "role": "Editor"
+      }
+    ],
+    "icon": "src/img/icon-512.png",
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "universal"
+          ]
+        }
+      ],
+      "category": "public.app-category.sports",
+      "hardenedRuntime": true,
+      "entitlements": "app/build/entitlements.mac.plist",
+      "entitlementsInherit": "app/build/entitlements.mac.plist"
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "category": "Sports"
+    },
+    "electronLanguages": [
+      "en-US",
+      "fr",
+      "de",
+      "es"
+    ],
+    "nsis": {
+      "artifactName": "Ozimut-Chrono-Setup.${ext}",
+      "differentialPackage": false
+    },
+    "portable": {
+      "artifactName": "Ozimut-Chrono-Portable.${ext}"
+    },
+    "dmg": {
+      "artifactName": "Ozimut-Chrono.${ext}",
+      "writeUpdateInfo": false
+    },
+    "appImage": {
+      "artifactName": "Ozimut-Chrono.${ext}"
+    }
+  }
+}

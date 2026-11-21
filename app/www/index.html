@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>Ozimut Chrono</title>
+  <!-- the standalone page of Ozimut Chrono: the app's window and every station or phone that opens the hub's address get
+       it. Everything comes from the hub itself (docs/design.md): no other host -->
+  <script>
+    // the theme chosen on this device (the home screen), else by the system's light or dark setting — before anything is drawn
+    try { var th = localStorage.getItem("ozchrono.theme"); } catch (e) { th = null; }
+    document.documentElement.dataset.theme = ["light", "clearing", "forest", "undergrowth", "dark"].indexOf(th) >= 0 ? th : matchMedia("(prefers-color-scheme: dark)").matches ? "undergrowth" : "clearing";
+  </script>
+  <link rel="icon" href="/src/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/src/css/base.css">
+  <link rel="stylesheet" href="/src/css/chrono.css">
+</head>
+<body>
+  <div id="chrono-root"></div>
+  <script type="module">import { standalone } from "/src/ui/standalone.js"; standalone(document.getElementById("chrono-root"));</script>
+</body>
+</html>
