@@ -1,7 +1,7 @@
 // This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
 // distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-// Ozimut Chrono, the app (docs/design.md): Electron's main process. It starts the hub (hub.mjs: the page, the
+// Chronoz, the app (docs/design.md): Electron's main process. It starts the hub (hub.mjs: the page, the
 // assets, the stations' sockets, the journals, the radio listener) and opens a window on the hub's own page — the page the
 // other computers and phones open at this computer's address —, so the window is one more station. What a page cannot do
 // is given to it through the preload (window.chronoApp): the printers and silent printing, saving a file, the data
@@ -23,7 +23,7 @@ import { startUpdates, RELEASES } from "./update.mjs";
 const here = path.dirname(fileURLToPath(import.meta.url));
 const SRC = path.join(here, "..", "src");                 // Chrono's modules, styles and pictures: inside the package too
 const PORT = 8377, MORE_PORTS = 10, SIRAP_PORT = 10000;
-const EVENT_FILE = /\.ozchrono(\.jsonl)?$/i, JOURNAL = /^([A-Za-z0-9_-]{1,64})\.ozchrono\.jsonl$/;
+const EVENT_FILE = /\.chronoz(\.jsonl)?$/i, JOURNAL = /^([A-Za-z0-9_-]{1,64})\.chronoz\.jsonl$/;
 const MM = 96 / 25.4;                                       // CSS pixels in a millimetre
 
 // `--smoke` (or CHRONO_SMOKE=1): the launch checked without anyone watching — see smoke() below
@@ -57,7 +57,7 @@ async function start() {
   let docs;
   try { docs = app.getPath("documents"); } catch (e) { docs = app.getPath("home"); }
   // a smoke run keeps away from the user's events and from the ports of an app that is open: its own folder, any free port
-  const folder = SMOKE ? path.join(smokeDir, "events") : set.folder || path.join(docs, "Ozimut Chrono");
+  const folder = SMOKE ? path.join(smokeDir, "events") : set.folder || path.join(docs, "Chronoz");
   try {
     hub = await startHub({ port: SMOKE ? 0 : PORT, tries: MORE_PORTS + 1, sirapPort: SMOKE ? null : SIRAP_PORT, folder, src: SRC, www: path.join(here, "www"),
       token: set.token, name: os.hostname(), version: app.getVersion(), ...(SMOKE ? { discovery: false } : {}) });
@@ -81,7 +81,7 @@ async function start() {
 /** A window on the hub's pages: it stays on them, any other address opens in the computer's browser. */
 function hubWindow(o) {
   const w = new BrowserWindow({
-    minWidth: 720, minHeight: 480, title: "Ozimut Chrono", backgroundColor: "#f9f9f7", show: !SMOKE, ...o,
+    minWidth: 720, minHeight: 480, title: "Chronoz", backgroundColor: "#f9f9f7", show: !SMOKE, ...o,
     ...(process.platform === "darwin" ? {} : { icon: path.join(SRC, "img", "icon-512.png") }),
     webPreferences: { preload: path.join(here, "preload.cjs"), contextIsolation: true, nodeIntegration: false, sandbox: true, spellcheck: false,   // (no dictionary fetched from anywhere)
       additionalArguments: [`--chrono-version=${app.getVersion()}`] },
@@ -113,7 +113,7 @@ function go(ev = "") {
 /** The documentation (www/doc.html, served by the hub as the page is), in a window of its own beside the timing. */
 function openDoc() {
   if (docWin) { if (docWin.isMinimized()) docWin.restore(); docWin.show(); docWin.focus(); return; }
-  docWin = hubWindow({ width: 980, height: 820, title: `Ozimut Chrono — ${S.doc}` });
+  docWin = hubWindow({ width: 980, height: 820, title: `Chronoz — ${S.doc}` });
   docWin.setMenuBarVisibility(false);
   docWin.on("closed", () => { docWin = null; });
   docWin.loadURL(`${origin}/doc.html`).catch(() => { /* the window shows what failed */ });
@@ -215,9 +215,9 @@ function serial(ses) {
   ses.setDevicePermissionHandler((details) => details.deviceType === "serial" && ours(details.origin));
 }
 
-// ---- an event file (.ozchrono, or a journal) opened with the app: its operations join the hub's log of that event ----
+// ---- an event file (.chronoz, or a journal) opened with the app: its operations join the hub's log of that event ----
 function openFile(file) {
-  const fail = (message) => { box({ type: "error", title: "Ozimut Chrono", message, detail: file, buttons: [S.ok] }); if (win && !win.webContents.getURL()) go(); };
+  const fail = (message) => { box({ type: "error", title: "Chronoz", message, detail: file, buttons: [S.ok] }); if (win && !win.webContents.getURL()) go(); };
   let text, f;
   try { text = fs.readFileSync(file, "utf8"); } catch (e) { return fail(S.fileRead); }
   try { f = fromFile(text); } catch (e) { return fail(e.message === "version" ? S.fileNewer : S.fileBad); }
@@ -227,7 +227,7 @@ function openFile(file) {
   show();
 }
 async function pickFile() {
-  const o = { title: S.fileTitle, defaultPath: hub.folder, properties: ["openFile"], filters: [{ name: S.fileKind, extensions: ["ozchrono", "jsonl"] }] };
+  const o = { title: S.fileTitle, defaultPath: hub.folder, properties: ["openFile"], filters: [{ name: S.fileKind, extensions: ["chronoz", "jsonl"] }] };
   const { canceled, filePaths } = await (win ? dialog.showOpenDialog(win, o) : dialog.showOpenDialog(o));
   if (!canceled && filePaths?.[0]) openFile(filePaths[0]);
 }
@@ -255,7 +255,7 @@ async function printers(wc) {
  */
 async function print(html, { printer = "", silent = true, widthMm = 0 } = {}) {
   const w = Number(widthMm) > 0 ? Number(widthMm) : 0, quiet = silent !== false;
-  const file = path.join(app.getPath("temp"), `ozimut-chrono-${crypto.randomBytes(6).toString("hex")}.html`);
+  const file = path.join(app.getPath("temp"), `chronoz-${crypto.randomBytes(6).toString("hex")}.html`);
   const page = new BrowserWindow({ show: false, useContentSize: true, width: w ? Math.max(Math.round(w * MM), 120) : 794, height: 1123,
     webPreferences: { sandbox: true, contextIsolation: true, nodeIntegration: false } });
   try {
@@ -305,7 +305,7 @@ function handlers() {
 // ---- the menu ----
 function about() {
   const urls = hub.addresses().map((a) => `http://${a}:${hub.port}/?k=${encodeURIComponent(hub.token)}`);
-  box({ type: "info", title: S.about, message: `Ozimut Chrono — ${fill(S.aboutVersion, { v: app.getVersion() })}`, buttons: [S.ok],
+  box({ type: "info", title: S.about, message: `Chronoz — ${fill(S.aboutVersion, { v: app.getVersion() })}`, buttons: [S.ok],
     detail: [urls.length ? `${S.aboutStations}\n${urls.join("\n")}` : S.aboutNoNetwork,
       fill(hub.sirapPort ? S.aboutRadio : S.aboutNoRadio, { port: hub.sirapPort || SIRAP_PORT }), fill(S.aboutFolder, { folder: hub.folder })].join("\n\n") });
 }
@@ -354,7 +354,7 @@ function menu() {
 if (SMOKE) {
   // nothing of the user's is read or written: settings in a folder of its own, which also keeps this run apart from an
   // app that is open (the single-instance lock goes by that folder)
-  smokeDir = fs.mkdtempSync(path.join(os.tmpdir(), "ozimut-chrono-smoke-"));
+  smokeDir = fs.mkdtempSync(path.join(os.tmpdir(), "chronoz-smoke-"));
   app.setPath("userData", path.join(smokeDir, "user"));
   app.disableHardwareAcceleration();                       // a build machine has no graphics card to count on
   setTimeout(() => smokeEnd([`timeout: the app was not ready after ${SMOKE_S + 15} s`]), (SMOKE_S + 15) * 1000);

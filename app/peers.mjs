@@ -57,7 +57,7 @@ export function startPeers(o) {
   // ---- saying who we are ----
   const beacon = () => {
     const events = o.held().slice(0, EVENTS_SAID).map((e) => ({ ev: e.ev, n: String(e.name || "").slice(0, 40), d: e.date || "" }));
-    return Buffer.from(JSON.stringify({ oz: "chrono", v: 1, id: o.station, name: String(o.name || "").slice(0, 40), ver: String(o.version || "").slice(0, 20), port: o.port, events }));
+    return Buffer.from(JSON.stringify({ oz: "chronoz", v: 1, id: o.station, name: String(o.name || "").slice(0, 40), ver: String(o.version || "").slice(0, 20), port: o.port, events }));
   };
   function say() {
     if (!sock || closed) return;
@@ -68,7 +68,7 @@ export function startPeers(o) {
   function heard(msg, from) {
     let m;
     try { m = JSON.parse(msg.toString("utf8")); } catch (e) { return; }
-    if (!m || m.oz !== "chrono" || m.id === o.station || !STATION.test(m.id || "") || !Number.isInteger(m.port)) return;
+    if (!m || m.oz !== "chronoz" || m.id === o.station || !STATION.test(m.id || "") || !Number.isInteger(m.port)) return;
     const events = (Array.isArray(m.events) ? m.events : []).slice(0, EVENTS_SAID)
       .filter((e) => e && typeof e.ev === "string" && /^[A-Za-z0-9_-]{1,64}$/.test(e.ev))
       .map((e) => ({ ev: e.ev, name: String(e.n || "").slice(0, 60), date: String(e.d || "").slice(0, 10) }));

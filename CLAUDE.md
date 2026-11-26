@@ -1,6 +1,6 @@
-# Ozimut Chrono — notes for coding sessions
+# Chronoz — notes for coding sessions
 
-Ozimut Chrono times orienteering races: entries, start draw, SPORTident/Emit card reading, results, referee, lists. An
+Chronoz times orienteering races: entries, start draw, SPORTident/Emit card reading, results, referee, lists. An
 Electron desktop app; every copy runs a hub that serves its pages to the phones and screens of the arena and links by
 itself to the other laptops holding the same event, with no Internet. Public repository, Mozilla Public License 2.0.
 Author and copyright holder: Yann Le Helloco (GitHub `kerkia`). Code, comments and commit messages in English.
@@ -13,14 +13,14 @@ sources. The user documentation is `src/doc/app.<lang>.js` (Help › Documentati
 
 - `src/` — pure ES modules, **no build step**; they run in a page, in the app and under Node.
   - Engine: `log.js` (the log of operations, hybrid clock, folded into the state), `model.js`, `judge.js`, `view.js`,
-    `draw.js`, `times.js`, `sync.js`, `store.js` (IndexedDB, the `.ozchrono` file), `knockout.js`, `series.js`, `xml.js`;
+    `draw.js`, `times.js`, `sync.js`, `store.js` (IndexedDB, the `.chronoz` file), `knockout.js`, `series.js`, `xml.js`;
     `rules/` (fr, ca, iof — nothing country-specific in the engine), `io/` (IOF XML, OE CSV, MeOS XML, MOP, SIRAP), `si/`,
     `emit/`, `print/`. No DOM and no UI text in the engine.
   - `ui/` the screens; `lib/` (`i18n.js`, `html.js`, `ask.js`); `i18n/<lang>.js` the catalogues; `doc/` the user guide;
     `css/base.css` (the app's own page: tokens, themes, shared parts) and `css/chrono.css` (the screens; a host site loads
     only this one); `img/`.
 - `app/` — `main.mjs` (Electron main process: window, menu, printing, serial port choice, settings), `hub.mjs` (plain Node:
-  HTTP + WebSocket on 8377, one journal `<event>.ozchrono.jsonl` per event, SIRAP on TCP 10000), `peers.mjs` (UDP discovery
+  HTTP + WebSocket on 8377, one journal `<event>.chronoz.jsonl` per event, SIRAP on TCP 10000), `peers.mjs` (UDP discovery
   on 8379, links between hubs, the event code's proof), `ports.mjs`, `update.mjs`, `strings.mjs` (menu texts), `preload.cjs`
   (`window.chronoApp`), `www/index.html` + `doc.html`, `dev-hub.mjs`, `smoke.mjs`.
 - `test/t_*.mjs` — plain Node, ~800 checks. `tools/` — `test.mjs`, `i18n_check.mjs`, `latest.mjs`, `release-notes.mjs`.

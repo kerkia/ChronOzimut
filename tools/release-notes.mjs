@@ -30,7 +30,7 @@ const lines = [];
 lines.push(previous ? `Changes since ${previous}:` : "Changes:", "");
 for (const s of subjects.length ? subjects : ["(no change in the code)"]) lines.push(`- ${s}`);
 lines.push("");
-let footer = "Windows: Ozimut-Chrono-Setup.exe installs and keeps itself up to date; the portable program and the macOS app tell you when a new version exists.";
+let footer = "Windows: Chronoz-Setup.exe installs and keeps itself up to date; the portable program and the macOS app tell you when a new version exists.";
 if (!signedWin && !signedMac) footer += " Not signed yet: Windows SmartScreen and macOS Gatekeeper will warn.";
 else if (!signedWin) footer += " The Windows files are not signed yet: Windows SmartScreen will warn.";
 else if (!signedMac) footer += " The macOS app is not signed yet: macOS Gatekeeper will warn.";

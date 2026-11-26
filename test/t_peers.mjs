@@ -29,7 +29,7 @@ const D = [28401, 28402, 28403, 28404];                 // each hub's discovery 
 const to = (i) => D.filter((_, j) => j !== i).map((port) => ({ host: "127.0.0.1", port }));
 const hubs = [];
 const start = async (i, name, extra = {}) => {
-  const folder = fs.mkdtempSync(path.join(os.tmpdir(), "ozchrono-peer-"));
+  const folder = fs.mkdtempSync(path.join(os.tmpdir(), "chronoz-peer-"));
   // no trust given to this computer: a hub here proves it knows the code, as from another laptop
   const h = await startHub({ port: 0, sirapPort: null, folder, src, www, name, trustLoopback: false, discovery: { port: D[i], to: to(i) }, ...extra });
   hubs.push(h);
@@ -93,7 +93,7 @@ eq(await E.peers.addStatic("127.0.0.1", A.port, A.token, EV), "ok", "an address 
 ok(await until(() => state(E, EV) === state(A, EV)), "it holds the event");
 ok(!(await info(A)).peers.hubs.some((h) => h.name === "PC-Isole"), "a hub without discovery is not heard of");
 // a wrong key is refused
-const F = await start(3, "PC-Faux", { discovery: false, folder: fs.mkdtempSync(path.join(os.tmpdir(), "ozchrono-peer-")) }).catch(() => null);
+const F = await start(3, "PC-Faux", { discovery: false, folder: fs.mkdtempSync(path.join(os.tmpdir(), "chronoz-peer-")) }).catch(() => null);
 if (F) eq(await F.peers.addStatic("127.0.0.1", A.port, "wrong", EV), "code", "a wrong key is refused");
 
 // /hub/join and /hub/peer answer this computer's own page only

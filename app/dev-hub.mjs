@@ -10,7 +10,7 @@ import { startHub } from "./hub.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const port = Number(process.argv[2]) || 8377;
-const folder = process.argv[3] || path.join(os.homedir(), "Documents", "Ozimut Chrono");
+const folder = process.argv[3] || path.join(os.homedir(), "Documents", "Chronoz");
 const hub = await startHub({ port, sirapPort: null, folder, src: path.join(here, "..", "src"), www: path.join(here, "www"), name: os.hostname(), version: "dev", tries: 1 });
-console.log(`Ozimut Chrono hub on http://localhost:${hub.port}/ — other computers: ${hub.addresses().map((a) => `http://${a}:${hub.port}/?k=${hub.token}`).join(", ") || "(no network)"}`);
+console.log(`Chronoz hub on http://localhost:${hub.port}/ — other computers: ${hub.addresses().map((a) => `http://${a}:${hub.port}/?k=${hub.token}`).join(", ") || "(no network)"}`);
 console.log(`Events kept in ${hub.folder}`);

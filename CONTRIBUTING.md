@@ -1,13 +1,13 @@
 # Contributing
 
-Thank you for helping. Ozimut Chrono is young, and reports from real races and real hardware are the most useful
+Thank you for helping. Chronoz is young, and reports from real races and real hardware are the most useful
 contributions of all.
 
 ## Reporting a bug
 
-Open an issue at <https://github.com/kerkia/ChronOzimut/issues> and give:
+Open an issue at <https://github.com/kerkia/Chronoz/issues> and give:
 
-- the app's version (Help › « About Ozimut Chrono ») and the system (Windows, macOS or Linux, and its version);
+- the app's version (Help › « About Chronoz ») and the system (Windows, macOS or Linux, and its version);
 - what you did, what you expected, what happened — step by step;
 - the hardware involved, if any: the card reader (SPORTident station model and firmware, Emit reader), the card family,
   the printer;

@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="light dark">
-  <title>Ozimut Chrono</title>
-  <!-- the documentation of Ozimut Chrono's app: Help › Documentation opens it in a window of its own, and every station
+  <title>Chronoz</title>
+  <!-- the documentation of Chronoz's app: Help › Documentation opens it in a window of its own, and every station
        or phone may read it at the hub's address (/doc.html). As the standalone page, everything comes from the hub -->
   <script>
     // the theme chosen on this device (the home screen), else by the system's light or dark setting — before anything is drawn
-    try { var th = localStorage.getItem("ozchrono.theme"); } catch (e) { th = null; }
+    try { var th = localStorage.getItem("chronoz.theme"); } catch (e) { th = null; }
     document.documentElement.dataset.theme = ["light", "clearing", "forest", "undergrowth", "dark"].indexOf(th) >= 0 ? th : matchMedia("(prefers-color-scheme: dark)").matches ? "undergrowth" : "clearing";
   </script>
   <link rel="icon" href="/src/img/favicon.svg" type="image/svg+xml">

@@ -3,18 +3,18 @@
 This program will not transfer any information to other networked systems unless specifically requested by the user or
 the person installing or operating it.
 
-This page says what Ozimut Chrono keeps, where, and what it sends on a network. It describes the desktop application built
+This page says what Chronoz keeps, where, and what it sends on a network. It describes the desktop application built
 from this repository. The « Chrono » tab of ozimut.com, which embeds the same screens, is governed by ozimut.com's own
 privacy page.
 
 ## What stays on the computer
 
-- **The events**: one journal per event, `<event>.ozchrono.jsonl`, in the folder `Documents/Ozimut Chrono` (or the folder
+- **The events**: one journal per event, `<event>.chronoz.jsonl`, in the folder `Documents/Chronoz` (or the folder
   named in `settings.json`). Every operation is appended to it as it happens. Beside them, `hub.json` keeps this computer's
   identity on the local network, the event opened last, the event codes typed to join an event and the addresses of other
   computers added by hand.
-- **The settings**: `settings.json` in the per-user application-data folder « Ozimut Chrono » (`%APPDATA%\Ozimut Chrono` on
-  Windows, `~/Library/Application Support/Ozimut Chrono` on macOS, `~/.config/Ozimut Chrono` on Linux): the app's key (the
+- **The settings**: `settings.json` in the per-user application-data folder « Chronoz » (`%APPDATA%\Chronoz` on
+  Windows, `~/Library/Application Support/Chronoz` on macOS, `~/.config/Chronoz` on Linux): the app's key (the
   one phones and other computers are asked for), the data folder when it is not the usual one, the folder files were last
   saved to, the serial port chosen for each use, whether updates are checked.
 - **The page's own storage**, in the same folder: the window is a web page, and it keeps a copy of the events in its
@@ -23,11 +23,11 @@ privacy page.
 
 An event holds what an organiser puts in it: runners' names, clubs, licence and card numbers, birth years, times, and the
 event's code. **The organiser is responsible for those data** and for whom they share them with; keep the data folder as
-you keep your results files. Nothing of it is sent to the author of Ozimut Chrono.
+you keep your results files. Nothing of it is sent to the author of Chronoz.
 
 ## The local network
 
-Ozimut Chrono is made to link the laptops of an arena without the Internet. On the local network:
+Chronoz is made to link the laptops of an arena without the Internet. On the local network:
 
 - **It announces itself** every five seconds by a UDP broadcast on port 8379: the computer's name, the app's version, the
   port its pages are served on, an identifier of the app's copy, and for each of its latest events (twelve at most) the
@@ -47,7 +47,7 @@ The app makes no request to the Internet by itself, except:
 
 1. **The update check** — at start and every six hours, a request to github.com for the latest release of this repository
    (and, when a new version exists for the installed Windows app or the AppImage, its download from GitHub). Nothing is
-   sent beyond what any HTTPS request carries (the computer's address, the app's user agent). Help › « Keep Ozimut Chrono up
+   sent beyond what any HTTPS request carries (the computer's address, the app's user agent). Help › « Keep Chronoz up
    to date » switches it off.
 2. **What you ask for**: a link you click opens in your usual browser. The connection to ozimut.com exists only when it was
    set up from ozimut.com's « Chrono » tab (signed in there, « Give the other stations access »): the event then carries a
@@ -60,5 +60,5 @@ itself, at `localhost`, apart).
 
 ## Questions
 
-Write to contact@ozimut.com, or open an issue at <https://github.com/kerkia/ChronOzimut/issues> (with no personal data in
+Write to contact@ozimut.com, or open an issue at <https://github.com/kerkia/Chronoz/issues> (with no personal data in
 it: the repository is public).

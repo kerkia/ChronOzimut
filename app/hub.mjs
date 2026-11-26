@@ -1,7 +1,7 @@
 // This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not
 // distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-// Ozimut Chrono's hub (docs/design.md, « The app and its hub »). The app's main process runs it, and it runs alone
+// Chronoz's hub (docs/design.md, « The app and its hub »). The app's main process runs it, and it runs alone
 // under Node (test/t_hub.mjs): nothing of Electron here, and no framework. It serves the standalone page and the
 // site's assets over HTTP, holds one log per event and is a station like any other: every socket on /hub is tied to its
 // event's log with sync.link, so what one station adds reaches the others through it. Every new operation is appended to
@@ -27,7 +27,7 @@ import { takeRead } from "../src/model.js";
 import { SirapDecoder } from "../src/io/sirap.js";
 
 export const EVENT_ID = /^[A-Za-z0-9_-]{1,64}$/;
-const JOURNAL = /^([A-Za-z0-9_-]{1,64})\.ozchrono\.jsonl$/;
+const JOURNAL = /^([A-Za-z0-9_-]{1,64})\.chronoz\.jsonl$/;
 const DEVICE = /^(con|prn|aux|nul|com\d|lpt\d)(\.|$)/i;          // Windows' devices, whatever follows the dot: never a file
 const LOOPBACK = /^(::ffff:)?127\.\d+\.\d+\.\d+$|^::1$/;
 const LOCAL_ORIGIN = /^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/;
@@ -40,7 +40,7 @@ const MIME = {
   ".wasm": "application/wasm", ".pdf": "application/pdf",
 };
 // what a visitor from another computer gets without the token: a field for it (no words: the page has no language yet)
-const ASK = "<!doctype html><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><title>Ozimut Chrono</title>"
+const ASK = "<!doctype html><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><title>Chronoz</title>"
   + "<form style=\"display:flex;gap:8px;justify-content:center;margin:25vh 16px 0;font:18px system-ui,sans-serif\">"
   + "<input name=\"k\" autofocus autocomplete=\"off\" placeholder=\"&#128273;\" aria-label=\"&#128273;\" style=\"font:inherit;padding:8px;min-width:0;width:16em\">"
   + "<button style=\"font:inherit;padding:8px 16px\">OK</button></form>";
@@ -153,7 +153,7 @@ export async function startHub({ port = 8377, sirapPort = 10000, folder, src, ww
     if (!e) {
       const twin = fs.readdirSync(folder).map((f) => JOURNAL.exec(f)?.[1]).find((x) => x && x.toLowerCase() === k);
       if (twin && twin !== ev) throw new Error("event");
-      const file = path.join(folder, `${ev}.ozchrono.jsonl`), { ops, cut } = readJournal(file);
+      const file = path.join(folder, `${ev}.chronoz.jsonl`), { ops, cut } = readJournal(file);
       e = { ev, file, log: new Log(meta.station, ops), fd: null, cut, waiting: [], fault: null };
       // after the merge that brought the name: an operation added inside it would not reach the station that sent it
       e.log.on((added) => { e.waiting.push(...added); write(e); if (!quiet) setTimeout(() => coded(e), 0); });
@@ -166,7 +166,7 @@ export async function startHub({ port = 8377, sirapPort = 10000, folder, src, ww
 
   const peeks = new Map();         // journals not opened: what is said of them, until the file changes
   function peek(ev) {
-    const file = path.join(folder, `${ev}.ozchrono.jsonl`);
+    const file = path.join(folder, `${ev}.chronoz.jsonl`);
     try {
       const st = fs.statSync(file), sig = `${st.size}:${st.mtimeMs}`, had = peeks.get(ev);
       if (had?.sig === sig) return had.row;
@@ -377,7 +377,7 @@ export async function startHub({ port = 8377, sirapPort = 10000, folder, src, ww
   });
 
   // radio punches have their event before any station is back
-  if (typeof meta.last === "string" && fs.existsSync(path.join(folder, `${meta.last}.ozchrono.jsonl`))) { try { open(meta.last); } catch (e) { /* no longer an event */ } }
+  if (typeof meta.last === "string" && fs.existsSync(path.join(folder, `${meta.last}.chronoz.jsonl`))) { try { open(meta.last); } catch (e) { /* no longer an event */ } }
 
   return {
     port: bound, sirapPort: sirapBound, token, name, folder, station: meta.station,

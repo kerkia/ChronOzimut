@@ -1,6 +1,6 @@
-# Ozimut Chrono
+# Chronoz
 
-Ozimut Chrono times orienteering races: entries, start draw, card reading (SPORTident and Emit), results, the referee's
+Chronoz times orienteering races: entries, start draw, card reading (SPORTident and Emit), results, the referee's
 work and the lists to print. It is a desktop application for Windows, macOS and Linux that works without the Internet:
 every laptop of the arena runs it, the laptops find each other on the local network and keep the same race, and each one
 also serves its pages to the phones and screens around it.
@@ -27,21 +27,21 @@ real race. Try it at a training session, or alongside your usual timing software
 
 ## Download
 
-The latest release: <https://github.com/kerkia/ChronOzimut/releases/latest>. Direct links to its files:
+The latest release: <https://github.com/kerkia/Chronoz/releases/latest>. Direct links to its files:
 
 | System | File |
 |---|---|
-| Windows, installed (recommended; per user, no administrator rights) | [Ozimut-Chrono-Setup.exe](https://github.com/kerkia/ChronOzimut/releases/latest/download/Ozimut-Chrono-Setup.exe) |
-| Windows, portable (one program, nothing installed) | [Ozimut-Chrono-Portable.exe](https://github.com/kerkia/ChronOzimut/releases/latest/download/Ozimut-Chrono-Portable.exe) |
-| macOS (one disk image for Apple silicon and Intel) | [Ozimut-Chrono.dmg](https://github.com/kerkia/ChronOzimut/releases/latest/download/Ozimut-Chrono.dmg) |
-| Linux (64-bit) | [Ozimut-Chrono.AppImage](https://github.com/kerkia/ChronOzimut/releases/latest/download/Ozimut-Chrono.AppImage) |
+| Windows, installed (recommended; per user, no administrator rights) | [Chronoz-Setup.exe](https://github.com/kerkia/Chronoz/releases/latest/download/Chronoz-Setup.exe) |
+| Windows, portable (one program, nothing installed) | [Chronoz-Portable.exe](https://github.com/kerkia/Chronoz/releases/latest/download/Chronoz-Portable.exe) |
+| macOS (one disk image for Apple silicon and Intel) | [Chronoz.dmg](https://github.com/kerkia/Chronoz/releases/latest/download/Chronoz.dmg) |
+| Linux (64-bit) | [Chronoz.AppImage](https://github.com/kerkia/Chronoz/releases/latest/download/Chronoz.AppImage) |
 
 **The releases are not signed yet**, so the system is wary of the app at its first launch:
 
 - **Windows** shows « Windows protected your PC »: choose « More info », then « Run anyway ».
 - **macOS** first refuses to open it. On recent versions: System Settings › Privacy & Security, then « Open Anyway »; on
   older ones, right-click the app, « Open », then confirm.
-- **Linux**: make the file executable (`chmod +x Ozimut-Chrono.AppImage`, or Properties › Permissions), then run it.
+- **Linux**: make the file executable (`chmod +x Chronoz.AppImage`, or Properties › Permissions), then run it.
 
 ## At the arena
 
@@ -53,7 +53,7 @@ The latest release: <https://github.com/kerkia/ChronOzimut/releases/latest>. Dir
   once (home screen › « On the network » › the event › its code); after that the laptop links by itself at every launch.
   The code is never sent on the network: an app proves it knows it.
 - **Phones and screens** (speaker, results, start, referee) install nothing: their browser opens the address of any laptop,
-  given in Prepare › Connections and in Help › « About Ozimut Chrono » (`http://<laptop>:8377/?k=<key>`).
+  given in Prepare › Connections and in Help › « About Chronoz » (`http://<laptop>:8377/?k=<key>`).
 - **A network that blocks the announcements** (public or school Wi-Fi): Prepare › Connections › « A computer does not show
   up? » links two apps by address and key.
 - **With the Internet**, the « Chrono » tab of an event on [ozimut.com](https://ozimut.com) offers the same screens in a
@@ -72,26 +72,26 @@ The app keeps itself up to date without getting in a race's way (`app/update.mjs
 - The **installed Windows app** and the **Linux AppImage** download the new version in the background (its SHA-512 checked
   against the release's `latest.yml`) and install it **when the app is closed**. « Restart now » is offered, never forced.
 - The **macOS app** and the **Windows portable program** only say that a new version exists and where to download it.
-- Help › « Keep Ozimut Chrono up to date » switches the checks off.
+- Help › « Keep Chronoz up to date » switches the checks off.
 - Laptops linked at an arena show a warning in Prepare › Connections, and in the top bar, when their versions differ.
 
 ## Uninstalling
 
-- **Windows, installed**: Settings › Apps › « Ozimut Chrono » › Uninstall, or the uninstaller in the Start menu.
+- **Windows, installed**: Settings › Apps › « Chronoz » › Uninstall, or the uninstaller in the Start menu.
 - **Windows, portable**: delete the program file.
-- **macOS**: drag « Ozimut Chrono » from Applications to the Bin.
+- **macOS**: drag « Chronoz » from Applications to the Bin.
 - **Linux**: delete the AppImage.
 
 The events and the settings are kept on purpose; delete them by hand if you wish:
 
-- **The events**: the folder `Documents/Ozimut Chrono` (one journal `<event>.ozchrono.jsonl` per event, and `hub.json`),
+- **The events**: the folder `Documents/Chronoz` (one journal `<event>.chronoz.jsonl` per event, and `hub.json`),
   unless `settings.json` names another folder.
 - **The settings and the window's own storage** (`settings.json`, and the browser storage of the app's page, which includes
-  the card numbers remembered by Close): the per-user application-data folder « Ozimut Chrono » —
-  `%APPDATA%\Ozimut Chrono` on Windows, `~/Library/Application Support/Ozimut Chrono` on macOS, `~/.config/Ozimut Chrono`
+  the card numbers remembered by Close): the per-user application-data folder « Chronoz » —
+  `%APPDATA%\Chronoz` on Windows, `~/Library/Application Support/Chronoz` on macOS, `~/.config/Chronoz`
   on Linux.
-- **Downloaded updates** (installed Windows app, AppImage): the cache folder « ozimut-chrono-updater » —
-  `%LOCALAPPDATA%\ozimut-chrono-updater` on Windows, `~/.cache/ozimut-chrono-updater` on Linux.
+- **Downloaded updates** (installed Windows app, AppImage): the cache folder « chronoz-updater » —
+  `%LOCALAPPDATA%\chronoz-updater` on Windows, `~/.cache/chronoz-updater` on Linux.
 
 ## Building from source
 
@@ -132,7 +132,7 @@ npm run dist      # installers for the current system, in dist/
 
 ## Compatibility
 
-Ozimut Chrono reads and writes the files and protocols other timing software uses — IOF XML 3.0, OE CSV, MeOS's event file
+Chronoz reads and writes the files and protocols other timing software uses — IOF XML 3.0, OE CSV, MeOS's event file
 (`.meosxml`), MOP (MeOS Online Protocol) and SIRAP — **without any MeOS code**: MeOS is under the Affero GPL and its source
 was read only for names, units and numbers. `docs/meos.md` and `docs/emit.md` list every fact relied on and where it comes
 from, and what has not been checked against the real software or hardware.
@@ -154,7 +154,7 @@ unless specifically requested by the user or the person installing or operating 
 
 ## Relationship with ozimut.com
 
-Ozimut Chrono is an independent application: it needs no account and no Internet. [ozimut.com](https://ozimut.com), an
+Chronoz is an independent application: it needs no account and no Internet. [ozimut.com](https://ozimut.com), an
 orienteering site by the same author (closed source), embeds a copy of this repository's `src/` as the « Chrono » tab of
 its events. The app connects to ozimut.com only when its user asks for it, from that tab: a copy of the event kept on
 ozimut.com, results published to ozimut.com, live results.
@@ -166,7 +166,7 @@ licences; the files of this project that you distribute, changed or not, stay un
 
 ## Trademark
 
-« Ozimut », « Ozimut Chrono » and the logo are not covered by the licence: see [TRADEMARK.md](TRADEMARK.md).
+« Ozimut », « Chronoz » and the logo are not covered by the licence: see [TRADEMARK.md](TRADEMARK.md).
 
 ## Contributing
 

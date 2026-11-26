@@ -11,14 +11,14 @@
 //     WHEN THE APP IS CLOSED; « restart now » is offered, never forced: a card may be in a reader.
 //   - elsewhere — the macOS app while it is not signed with a Developer ID, the Windows portable program — it only says a
 //     new version exists and where to download it.
-//   - Help › « Keep Ozimut Chrono up to date » switches it off (settings.json `updates: false`).
+//   - Help › « Keep Chronoz up to date » switches it off (settings.json `updates: false`).
 //
 // The state — `{ status, version, how, percent }`, status "off" | "idle" | "checking" | "current" | "available" |
 // "downloading" | "ready" | "error" — goes to `say(state)`: the menu, and the pages through the hub's /hub/info.
 
 import { createRequire } from "node:module";
 
-export const RELEASES = "https://github.com/kerkia/ChronOzimut/releases";
+export const RELEASES = "https://github.com/kerkia/Chronoz/releases";
 const INFO = `${RELEASES}/latest/download/chrono-app.json`;
 const EVERY = 6 * 3600 * 1000;
 

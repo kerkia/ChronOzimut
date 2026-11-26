@@ -1,4 +1,4 @@
-# Ozimut Chrono — design
+# Chronoz — design
 
 Race timing (the French « GEC ») inside Ozimut: owner, 2026-11-17, after the study
 (https://claude.ai/artifact/1dFDHiPCfLzd5N3CbRx1tG) and the design note (https://claude.ai/artifact/HuNh42gd6RU8uqaHthADP4).
@@ -140,8 +140,8 @@ testable alone), which holds one `Log` per event and is a station like any other
 - `WS /hub?ev=<event id>&k=<token>`: JSON text frames, the messages of `sync.js` (`hello`, `ops`, `ready`, `no`). The hub
   links every socket to the event's log with `sync.link`; what one station adds reaches the others through it.
 - A token (random, kept in the app's settings) is asked of every request not coming from 127.0.0.1 / ::1.
-- Each event's operations are appended to `<folder>/<ev>.ozchrono.jsonl` (one JSON a line; `store.fromFile` reads it) and
-  read back when the event is opened again. Folder: `Documents/Ozimut Chrono` by default.
+- Each event's operations are appended to `<folder>/<ev>.chronoz.jsonl` (one JSON a line; `store.fromFile` reads it) and
+  read back when the event is opened again. Folder: `Documents/Chronoz` by default.
 - A TCP listener (port 10000, SIRAP) turns radio punches into `punch` operations of the event last opened.
 
 The app's window loads `http://127.0.0.1:8377/` — the same page other computers and phones open at the hub's address — so
@@ -156,7 +156,7 @@ to an app on the same computer (`ws://127.0.0.1:8377/hub`).
 ### The arena's computers (peers.mjs, 2026-11-18)
 
 Every app's hub is equal: nothing is chosen as the master. `app/peers.mjs`:
-- **Saying who it is**: a UDP broadcast every 5 s on port 8379 (`{ oz: "chrono", v: 1, id: <hub station>, name, port, events:
+- **Saying who it is**: a UDP broadcast every 5 s on port 8379 (`{ oz: "chronoz", v: 1, id: <hub station>, name, port, events:
   [{ ev, n: name, d: day }] }`, the 12 latest events), to each interface's broadcast address and 255.255.255.255.
 - **Linking**: a hub that hears of an event it holds too dials that hub (`ws://host:port/hub?ev=&peer=<its station>&lan=<proof>`),
   the smaller station id dialling, one link a pair (an incoming link from that hub stops the dial); the link is `sync.link` on

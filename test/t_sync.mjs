@@ -64,7 +64,7 @@ ok(answerSync(held, { ops: [{ s: 1, n: 1 }, null, { s: "q", n: "x" }] }).fresh.l
 const f = fromFile(toFile(c1, "ev123"));
 eq([f.ev, f.ops.length, new Log("n", f.ops).state], ["ev123", 3, c1.state], "the event file there and back");
 eq(fromFile(c1.ops.map((o) => JSON.stringify(o)).join("\n") + '\n{"s":"c1","n":9,"t":').ops.length, 3, "a journal cut mid-line keeps what is whole");
-let err = null; try { fromFile('{"format":"ozimut-chrono","version":99,"ops":[]}'); } catch (e) { err = e.message; }
+let err = null; try { fromFile('{"format":"chronoz","version":99,"ops":[]}'); } catch (e) { err = e.message; }
 eq(err, "version", "a newer file is refused");
 
 // the receipt and the lists

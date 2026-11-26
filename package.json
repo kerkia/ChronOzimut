@@ -1,14 +1,14 @@
 {
-  "name": "ozimut-chrono",
-  "productName": "Ozimut Chrono",
-  "version": "0.2.0",
+  "name": "chronoz",
+  "productName": "Chronoz",
+  "version": "0.3.0",
   "description": "Orienteering race timing: entries, start draw, card reading, results, on the arena's laptops, with or without Internet",
   "author": "Yann Le Helloco (Ozimut)",
   "license": "MPL-2.0",
-  "homepage": "https://github.com/kerkia/ChronOzimut",
+  "homepage": "https://github.com/kerkia/Chronoz",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kerkia/ChronOzimut.git"
+    "url": "https://github.com/kerkia/Chronoz.git"
   },
   "private": true,
   "type": "module",
@@ -32,8 +32,8 @@
     "electron-builder": "26.18.0"
   },
   "build": {
-    "appId": "com.ozimut.chrono",
-    "productName": "Ozimut Chrono",
+    "appId": "com.ozimut.chronoz",
+    "productName": "Chronoz",
     "copyright": "Copyright © 2026 Yann Le Helloco. Mozilla Public License 2.0.",
     "directories": {
       "output": "dist"
@@ -52,14 +52,14 @@
       {
         "provider": "github",
         "owner": "kerkia",
-        "repo": "ChronOzimut"
+        "repo": "Chronoz"
       }
     ],
     "fileAssociations": [
       {
-        "ext": "ozchrono",
-        "name": "Ozimut Chrono event",
-        "description": "Ozimut Chrono event",
+        "ext": "chronoz",
+        "name": "Chronoz event",
+        "description": "Chronoz event",
         "role": "Editor"
       }
     ],
@@ -112,18 +112,18 @@
       "es"
     ],
     "nsis": {
-      "artifactName": "Ozimut-Chrono-Setup.${ext}",
+      "artifactName": "Chronoz-Setup.${ext}",
       "differentialPackage": false
     },
     "portable": {
-      "artifactName": "Ozimut-Chrono-Portable.${ext}"
+      "artifactName": "Chronoz-Portable.${ext}"
     },
     "dmg": {
-      "artifactName": "Ozimut-Chrono.${ext}",
+      "artifactName": "Chronoz.${ext}",
       "writeUpdateInfo": false
     },
     "appImage": {
-      "artifactName": "Ozimut-Chrono.${ext}"
+      "artifactName": "Chronoz.${ext}"
     }
   }
 }

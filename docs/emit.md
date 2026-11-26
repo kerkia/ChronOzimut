@@ -1,4 +1,4 @@
-# Ozimut Chrono — Emit (EPT e-cards, the « 250 » reader, the MTR4, the eScan)
+# Chronoz — Emit (EPT e-cards, the « 250 » reader, the MTR4, the eScan)
 
 Written without any Emit hardware (2026-11-17). Everything below is facts learnt from published documents and from the
 few real frames found described online (field offsets, check rules, line settings: facts, not anyone's expression).

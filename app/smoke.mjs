@@ -26,9 +26,9 @@ function unpacked() {
   const dist = path.join(here, "..", "dist");
   const dirs = fs.existsSync(dist) ? fs.readdirSync(dist) : [];
   const first = (list) => list.find((f) => fs.existsSync(f));
-  if (process.platform === "win32") return first(dirs.filter((d) => /^win.*-unpacked$/.test(d)).map((d) => path.join(dist, d, "Ozimut Chrono.exe")));
-  if (process.platform === "darwin") return first(dirs.filter((d) => /^mac/.test(d)).map((d) => path.join(dist, d, "Ozimut Chrono.app", "Contents", "MacOS", "Ozimut Chrono")));
-  return first(dirs.filter((d) => /^linux.*-unpacked$/.test(d)).map((d) => path.join(dist, d, "ozimut-chrono")));
+  if (process.platform === "win32") return first(dirs.filter((d) => /^win.*-unpacked$/.test(d)).map((d) => path.join(dist, d, "Chronoz.exe")));
+  if (process.platform === "darwin") return first(dirs.filter((d) => /^mac/.test(d)).map((d) => path.join(dist, d, "Chronoz.app", "Contents", "MacOS", "Chronoz")));
+  return first(dirs.filter((d) => /^linux.*-unpacked$/.test(d)).map((d) => path.join(dist, d, "chronoz")));
 }
 
 const flags = process.argv.slice(2), doc = flags.includes("--doc"), arg = flags.find((f) => f !== "--doc") || "";
@@ -44,7 +44,7 @@ if (!arg) {
 args.push(doc ? "--smoke-doc" : "--smoke");
 if (process.platform === "linux") args.push("--no-sandbox");
 
-const out = path.join(fs.mkdtempSync(path.join(os.tmpdir(), "ozimut-chrono-smoke-out-")), "result.txt");
+const out = path.join(fs.mkdtempSync(path.join(os.tmpdir(), "chronoz-smoke-out-")), "result.txt");
 const env = { ...process.env, CHRONO_SMOKE: "1", CHRONO_SMOKE_OUT: out };
 delete env.ELECTRON_RUN_AS_NODE;                           // set by some shells' tools: Electron would run as plain Node
 

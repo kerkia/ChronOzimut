@@ -1,4 +1,4 @@
-# Builds Ozimut Chrono's desktop app for Windows, macOS and Linux and publishes it as a GitHub Release.
+# Builds Chronoz's desktop app for Windows, macOS and Linux and publishes it as a GitHub Release.
 #
 #   push to main       when package.json (a new version) or this file changes
 #   by hand            workflow_dispatch, from any branch
@@ -12,17 +12,17 @@
 # from the final (signed, when signed) files by tools/latest.mjs and checked against them. Then one release per
 # version, tag `v<version>`, marked latest:
 #
-#   Ozimut-Chrono-Setup.exe      Windows installer (NSIS): installs per user and keeps itself up to date
-#   Ozimut-Chrono-Portable.exe   Windows portable program
-#   Ozimut-Chrono.dmg            macOS, universal (Apple silicon and Intel)
-#   Ozimut-Chrono.AppImage       Linux
+#   Chronoz-Setup.exe      Windows installer (NSIS): installs per user and keeps itself up to date
+#   Chronoz-Portable.exe   Windows portable program
+#   Chronoz.dmg            macOS, universal (Apple silicon and Intel)
+#   Chronoz.AppImage       Linux
 #   latest.yml, latest-linux.yml what electron-updater (GitHub provider) reads: the installer's and the AppImage's
 #                                version, size and SHA-512. No latest-mac.yml: a macOS app not signed with a
 #                                Developer ID cannot replace itself; the app only tells its users a new version exists.
 #   chrono-app.json              { version, date, files, sizes, signed: { win, mac } }
 #
 # Stable download links, always the latest release:
-#   https://github.com/kerkia/ChronOzimut/releases/latest/download/Ozimut-Chrono-Setup.exe   (and the other files)
+#   https://github.com/kerkia/Chronoz/releases/latest/download/Chronoz-Setup.exe   (and the other files)
 #
 # The installed app finds its updates through resources/app-update.yml, which electron-builder writes only when it
 # packs for an updatable target (NSIS, AppImage, dmg). The Windows app is packed alone first (--dir, so that its
@@ -203,7 +203,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: unsigned-win-app
-          path: dist/win-unpacked/Ozimut Chrono.exe
+          path: dist/win-unpacked/Chronoz.exe
           if-no-files-found: error
           retention-days: 1
 
@@ -223,7 +223,7 @@ jobs:
 
       - name: SignPath 1/2 — put the signed program back
         if: runner.os == 'Windows' && env.HAS_SIGNPATH == 'true' && env.PUBLISH == 'true'
-        run: cp "signed/app/Ozimut Chrono.exe" "dist/win-unpacked/Ozimut Chrono.exe"
+        run: cp "signed/app/Chronoz.exe" "dist/win-unpacked/Chronoz.exe"
 
       - name: Build the installer and the portable program (Windows)
         if: runner.os == 'Windows'
@@ -252,8 +252,8 @@ jobs:
         with:
           name: unsigned-win-setup
           path: |
-            dist/Ozimut-Chrono-Setup.exe
-            dist/Ozimut-Chrono-Portable.exe
+            dist/Chronoz-Setup.exe
+            dist/Chronoz-Portable.exe
           if-no-files-found: error
           retention-days: 1
 
@@ -273,13 +273,13 @@ jobs:
 
       - name: SignPath 2/2 — put the signed files back
         if: runner.os == 'Windows' && env.HAS_SIGNPATH == 'true' && env.PUBLISH == 'true'
-        run: cp signed/setup/Ozimut-Chrono-Setup.exe signed/setup/Ozimut-Chrono-Portable.exe dist/
+        run: cp signed/setup/Chronoz-Setup.exe signed/setup/Chronoz-Portable.exe dist/
 
       - name: Is it signed? (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          $files = "dist/Ozimut-Chrono-Setup.exe", "dist/Ozimut-Chrono-Portable.exe"
+          $files = "dist/Chronoz-Setup.exe", "dist/Chronoz-Portable.exe"
           $states = $files | ForEach-Object { (Get-AuthenticodeSignature $_).Status }
           $signed = @($states | Where-Object { $_ -ne "Valid" }).Count -eq 0
           "signatures: $($states -join ', ')"
@@ -290,8 +290,8 @@ jobs:
       - name: Update information (Windows)
         if: runner.os == 'Windows'
         run: |
-          node tools/latest.mjs dist/Ozimut-Chrono-Setup.exe dist/latest.yml --version "$VERSION"
-          node tools/latest.mjs --check dist/latest.yml dist/Ozimut-Chrono-Setup.exe
+          node tools/latest.mjs dist/Chronoz-Setup.exe dist/latest.yml --version "$VERSION"
+          node tools/latest.mjs --check dist/latest.yml dist/Chronoz-Setup.exe
 
       # ---------------------------------------------------------------- macOS
       # One universal dmg (Apple silicon and Intel). Without a Developer ID the app is signed
@@ -324,7 +324,7 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           signed=false
-          if codesign -dv --verbose=2 "dist/mac-universal/Ozimut Chrono.app" 2>&1 | grep -q "^Authority=Developer ID Application"; then signed=true; fi
+          if codesign -dv --verbose=2 "dist/mac-universal/Chronoz.app" 2>&1 | grep -q "^Authority=Developer ID Application"; then signed=true; fi
           echo "Developer ID: $signed"
           echo "{\"signed\":$signed}" > dist/meta-mac.json
 
@@ -342,8 +342,8 @@ jobs:
       - name: Update information (Linux)
         if: runner.os == 'Linux'
         run: |
-          node tools/latest.mjs dist/Ozimut-Chrono.AppImage dist/latest-linux.yml --version "$VERSION"
-          node tools/latest.mjs --check dist/latest-linux.yml dist/Ozimut-Chrono.AppImage
+          node tools/latest.mjs dist/Chronoz.AppImage dist/latest-linux.yml --version "$VERSION"
+          node tools/latest.mjs --check dist/latest-linux.yml dist/Chronoz.AppImage
 
       # ---------------------------------------------------------------- every system
       # the macOS app does not update itself (no Developer ID yet): a missing file there is only a warning
@@ -351,7 +351,7 @@ jobs:
         run: |
           case "$RUNNER_OS" in
             Windows) f="dist/win-unpacked/resources/app-update.yml" ;;
-            macOS)   f="dist/mac-universal/Ozimut Chrono.app/Contents/Resources/app-update.yml" ;;
+            macOS)   f="dist/mac-universal/Chronoz.app/Contents/Resources/app-update.yml" ;;
             Linux)   f="dist/linux-unpacked/resources/app-update.yml" ;;
           esac
           if [ ! -f "$f" ]; then
@@ -359,17 +359,17 @@ jobs:
             echo "::error::$f is missing: the app could not look for its updates"; exit 1
           fi
           echo "$f:"; cat "$f"
-          grep -q "^provider: github" "$f" && grep -q "^repo: ChronOzimut" "$f"
+          grep -q "^provider: github" "$f" && grep -q "^repo: Chronoz" "$f"
 
       - name: Keep the files
         uses: actions/upload-artifact@v4
         with:
           name: chrono-${{ matrix.key }}
           path: |
-            dist/Ozimut-Chrono-Setup.exe
-            dist/Ozimut-Chrono-Portable.exe
-            dist/Ozimut-Chrono.dmg
-            dist/Ozimut-Chrono.AppImage
+            dist/Chronoz-Setup.exe
+            dist/Chronoz-Portable.exe
+            dist/Chronoz.dmg
+            dist/Chronoz.AppImage
             dist/latest.yml
             dist/latest-linux.yml
             dist/meta-*.json
@@ -403,8 +403,8 @@ jobs:
 
       - name: Check the update information against the files
         run: |
-          node tools/latest.mjs --check out/latest.yml out/Ozimut-Chrono-Setup.exe
-          node tools/latest.mjs --check out/latest-linux.yml out/Ozimut-Chrono.AppImage
+          node tools/latest.mjs --check out/latest.yml out/Chronoz-Setup.exe
+          node tools/latest.mjs --check out/latest-linux.yml out/Chronoz.AppImage
           grep -qx "version: $VERSION" out/latest.yml
           grep -qx "version: $VERSION" out/latest-linux.yml
 
@@ -415,7 +415,7 @@ jobs:
           node - <<'EOF'
           const fs = require("fs");
           const version = require("./package.json").version;
-          const files = { win: "Ozimut-Chrono-Setup.exe", winPortable: "Ozimut-Chrono-Portable.exe", mac: "Ozimut-Chrono.dmg", linux: "Ozimut-Chrono.AppImage" };
+          const files = { win: "Chronoz-Setup.exe", winPortable: "Chronoz-Portable.exe", mac: "Chronoz.dmg", linux: "Chronoz.AppImage" };
           const sizes = {};
           for (const [k, f] of Object.entries(files)) sizes[k] = fs.statSync(`out/${f}`).size;       // a missing file stops the release here
           const signed = (k) => { try { return JSON.parse(fs.readFileSync(`out/meta-${k}.json`, "utf8").replace(/^[^{]*/, "")).signed === true; } catch (e) { return false; } };
@@ -438,6 +438,6 @@ jobs:
 
       - name: Publish
         run: |
-          gh release create "$TAG" --target "$GITHUB_SHA" --title "Ozimut Chrono $VERSION" --notes-file notes.md --latest \
-            out/Ozimut-Chrono-Setup.exe out/Ozimut-Chrono-Portable.exe out/Ozimut-Chrono.dmg out/Ozimut-Chrono.AppImage \
+          gh release create "$TAG" --target "$GITHUB_SHA" --title "Chronoz $VERSION" --notes-file notes.md --latest \
+            out/Chronoz-Setup.exe out/Chronoz-Portable.exe out/Chronoz.dmg out/Chronoz.AppImage \
             out/latest.yml out/latest-linux.yml out/chrono-app.json

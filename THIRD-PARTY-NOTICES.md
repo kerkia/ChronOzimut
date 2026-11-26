@@ -1,6 +1,6 @@
 # Third-party notices
 
-Ozimut Chrono is Copyright © 2026 Yann Le Helloco and is distributed under the Mozilla Public License 2.0 (`LICENSE`).
+Chronoz is Copyright © 2026 Yann Le Helloco and is distributed under the Mozilla Public License 2.0 (`LICENSE`).
 It contains, or is distributed with, the work of others listed below.
 
 ## SPORTident support, ported from three MIT-licensed projects

@@ -31,7 +31,7 @@ const until = async (cond, ms = 4000) => { for (const t0 = Date.now(); !cond();)
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const src = path.join(here, "..", "src"), www = path.join(here, "..", "app", "www");
-const folder = fs.mkdtempSync(path.join(os.tmpdir(), "ozchrono-hub-")), folder2 = fs.mkdtempSync(path.join(os.tmpdir(), "ozchrono-hub-"));
+const folder = fs.mkdtempSync(path.join(os.tmpdir(), "chronoz-hub-")), folder2 = fs.mkdtempSync(path.join(os.tmpdir(), "chronoz-hub-"));
 const TOKEN = "essai-jeton-0123";
 const start = (o = {}) => startHub({ port: 0, sirapPort: 0, folder, src, www, token: TOKEN, name: "Essai", version: "9.9.9", discovery: false, codes: false, ...o });
 
@@ -104,7 +104,7 @@ ok(hub.open(EV) === hubLog && s1.peer?.station === hub.station && s1.peer?.name 
 eq(JSON.parse((await get(P, "/hub/info")).body).events, [{ ev: EV, name: "Course d'essai", date: "2026-11-15", ops: 3 }], "/hub/info lists the event");
 
 // ---- the journal ----
-const file = path.join(folder, `${EV}.ozchrono.jsonl`);
+const file = path.join(folder, `${EV}.chronoz.jsonl`);
 eq(lines(file).map((l) => { const o = JSON.parse(l); return `${o.s}:${o.n}:${o.k}`; }).sort(), ["st1:1:ev", "st1:2:put", "st2:1:put"], "the journal: one operation a line");
 eq(new Log("x", fromFile(fs.readFileSync(file, "utf8")).ops).state, s1.log.state, "store.fromFile reads the journal");
 eq(JSON.parse(fs.readFileSync(path.join(folder, "hub.json"), "utf8")), { station: hub.station, last: EV }, "hub.json: the station, the event last opened");
