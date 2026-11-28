@@ -124,11 +124,11 @@ npm run dist      # installers for the current system, in dist/
 | `src/i18n/<lang>.js` | The texts: `fr` (the reference), `en`, `de`, `es` |
 | `src/doc/app.<lang>.js` | The user documentation (Help › Documentation) |
 | `src/css/` | `base.css` (the app's own page: colours, themes, shared parts), `chrono.css` (the screens; a host site loads only this one) |
-| `src/img/` | Icons and logo |
+| `src/img/` | Icons and logo: Ozimut's compass in a stopwatch's case, drawn by `tools/make_icons.py` (with the Windows icon, `app/build/icon.ico`) |
 | `app/` | The Electron app: `main.mjs` (main process), `hub.mjs` (HTTP and WebSocket on port 8377, the journals, the SIRAP listener), `peers.mjs` (discovery on UDP 8379 and links between laptops), `ports.mjs` (which serial port), `update.mjs`, `strings.mjs` (the menus' texts), `preload.cjs`, `www/` (the page and the documentation's page), `dev-hub.mjs`, `smoke.mjs` |
 | `test/t_*.mjs` | The tests, plain Node |
 | `docs/` | `design.md` (the engine's contract), `meos.md`, `emit.md` (the format facts relied on, with their sources) |
-| `tools/` | `test.mjs`, `i18n_check.mjs`, `latest.mjs` and `release-notes.mjs` (used by the release workflow) |
+| `tools/` | `test.mjs`, `i18n_check.mjs`, `latest.mjs` and `release-notes.mjs` (used by the release workflow), `make_icons.py` (the icons; Pillow) |
 
 ## Compatibility
 

@@ -1,6 +1,7 @@
 # Trademark policy
 
-« Ozimut », « Chronoz » and the Ozimut logo (the pictures in `src/img/`) are trademarks of Yann Le Helloco.
+« Ozimut », « Chronoz », the Ozimut logo and the Chronoz logo (Ozimut's compass in a stopwatch's case: the pictures in
+`src/img/` and `app/build/icon.ico`) are trademarks of Yann Le Helloco.
 
 The code of this repository is under the Mozilla Public License 2.0, but **the licence does not grant any right to these
 names and logo**: its section 2.3 excludes trademarks. This page is the project's policy for them, written in plain words;
@@ -17,7 +18,7 @@ it is not legal advice.
 
 - Distribute a **modified version** under the name « Ozimut » or « Chronoz », or with the logo. A modified version
   given to others must have a different name and logo — change `productName`, the window's title, the icons in `src/img/`
-  and the texts that name the app.
+  and `app/build/icon.ico`, and the texts that name the app.
 - Suggest that your version, service or product is the official one, or endorsed by the project or by ozimut.com.
 - Use the names or the logo in the name of your own product, domain or company.
 

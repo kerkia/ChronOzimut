@@ -18,12 +18,13 @@ sources. The user documentation is `src/doc/app.<lang>.js` (Help › Documentati
     `emit/`, `print/`. No DOM and no UI text in the engine.
   - `ui/` the screens; `lib/` (`i18n.js`, `html.js`, `ask.js`); `i18n/<lang>.js` the catalogues; `doc/` the user guide;
     `css/base.css` (the app's own page: tokens, themes, shared parts) and `css/chrono.css` (the screens; a host site loads
-    only this one); `img/`.
+    only this one); `img/` (the icons: Ozimut's compass in a stopwatch's case — crown on top, pusher at 45° —, drawn
+    with `app/build/icon.ico` by `py tools/make_icons.py`; change the drawing there, never the files).
 - `app/` — `main.mjs` (Electron main process: window, menu, printing, serial port choice, settings), `hub.mjs` (plain Node:
   HTTP + WebSocket on 8377, one journal `<event>.chronoz.jsonl` per event, SIRAP on TCP 10000), `peers.mjs` (UDP discovery
   on 8379, links between hubs, the event code's proof), `ports.mjs`, `update.mjs`, `strings.mjs` (menu texts), `preload.cjs`
   (`window.chronoApp`), `www/index.html` + `doc.html`, `dev-hub.mjs`, `smoke.mjs`.
-- `test/t_*.mjs` — plain Node, ~800 checks. `tools/` — `test.mjs`, `i18n_check.mjs`, `latest.mjs`, `release-notes.mjs`.
+- `test/t_*.mjs` — plain Node, ~800 checks. `tools/` — `test.mjs`, `i18n_check.mjs`, `latest.mjs`, `release-notes.mjs`, `make_icons.py`.
 
 ## Rules
 
